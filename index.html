@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宫墙之内 · 见微知著 | 自我发现之旅</title>
+    <link rel="stylesheet" href="https:/myweb-zhenhuan/cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'SimSun', serif;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ff9aa2 25%, #ff7b8e 50%, #ff5c71 75%, #a05252 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 25px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(160, 82, 82, 0.4);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #a05252;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #a05252, #d4af37, #a05252);
+            z-index: 1;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            pointer-events: none;
+        }
+
+        .title {
+            color: #a05252;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .palace-icon {
+            font-size: 4rem;
+            color: #d4af37;
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .password-container {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .password-label {
+            display: block;
+            color: #a05252;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            letter-spacing: 8px;
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #a05252;
+            box-shadow: 0 5px 20px rgba(160, 82, 82, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .password-input::placeholder {
+            color: #aaa;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #a05252 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(160, 82, 82, 0.4);
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(160, 82, 82, 0.5);
+            background: linear-gradient(135deg, #c0392b 0%, #a05252 100%);
+        }
+
+        .enter-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .enter-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .enter-btn:hover::after {
+            left: 100%;
+        }
+
+        .message {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-weight: bold;
+        }
+
+        .message.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            opacity: 1;
+            border: 1px solid rgba(46, 204, 113, 0.4);
+        }
+
+        .message.error {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            opacity: 1;
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .copyright {
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+            text-align: center;
+            letter-spacing: 1px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(160, 82, 82, 0.2);
+        }
+
+        .hint {
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .decoration {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(212, 175, 55, 0.3);
+            z-index: -1;
+        }
+
+        .decoration.top-left {
+            top: 20px;
+            left: 20px;
+            transform: rotate(-15deg);
+        }
+
+        .decoration.top-right {
+            top: 20px;
+            right: 20px;
+            transform: rotate(15deg);
+        }
+
+        .decoration.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            transform: rotate(15deg);
+        }
+
+        .decoration.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(-15deg);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 15px;
+            }
+
+            .title {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .password-input {
+                padding: 15px;
+                font-size: 1.2rem;
+                letter-spacing: 6px;
+            }
+
+            .enter-btn {
+                padding: 16px 30px;
+                font-size: 1.2rem;
+            }
+
+            .palace-icon {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .password-input {
+                font-size: 1.1rem;
+                letter-spacing: 4px;
+            }
+
+            .enter-btn {
+                padding: 14px 25px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decoration top-left"><i class="fas fa-crown"></i></div>
+        <div class="decoration top-right"><i class="fas fa-crown"></i></div>
+        <div class="decoration bottom-left"><i class="fas fa-heart"></i></div>
+        <div class="decoration bottom-right"><i class="fas fa-heart"></i></div>
+
+        <div class="palace-icon">
+            <i class="fas fa-landmark"></i>
+        </div>
+
+        <h1 class="title">宫墙之内 · 见微知著</h1>
+        
+        <p class="subtitle">输入密钥进入测试，窥见深宫之中真实的你</p>
+        
+        <div class="password-container">
+            <label class="password-label" for="password">深宫密令</label>
+            <input 
+                type="password" 
+                id="password" 
+                class="password-input" 
+                placeholder="请输入6位数字密钥" 
+                maxlength="6"
+                autocomplete="off"
+                autofocus
+            >
+            <p class="hint">提示：按Enter键也可提交</p>
+        </div>
+        
+        <button class="enter-btn" id="enterBtn">
+            <i class="fas fa-door-open"></i> 踏入宫门
+        </button>
+        
+        <div class="message" id="message"></div>
+        
+        <div class="copyright">
+            自我发现之旅 · 2024<br>
+            <span style="font-size: 0.8rem; color: #999;">探索内心深处的真实自我</span>
+        </div>
+    </div>
+
+    <script>
+        // 验证密码逻辑
+        const correctPassword = "732610";
+        const passwordInput = document.getElementById('password');
+        const enterBtn = document.getElementById('enterBtn');
+        const messageDiv = document.getElementById('message');
+        
+        // 检查是否已经通过验证
+        if (sessionStorage.getItem('zhenhuan_auth') === 'true') {
+            // 如果已经验证过，直接跳转到测试页面
+            window.location.href = 'test.html';
+        }
+        
+        // 处理密码验证
+        function validatePassword() {
+            const enteredPassword = passwordInput.value.trim();
+            
+            // 清空之前的消息
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+            
+            // 验证长度
+            if (enteredPassword.length !== 6) {
+                showMessage('请输入6位数字密钥', 'error');
+                shakeInput();
+                return;
+            }
+            
+            // 验证是否为数字
+            if (!/^\d+$/.test(enteredPassword)) {
+                showMessage('密钥只能包含数字', 'error');
+                shakeInput();
+                return;
+            }
+            
+            // 验证密码是否正确
+            if (enteredPassword === correctPassword) {
+                showMessage('验证成功！正在进入测试...', 'success');
+                
+                // 保存验证状态到sessionStorage
+                sessionStorage.setItem('zhenhuan_auth', 'true');
+                
+                // 2秒后跳转到测试页面
+                setTimeout(() => {
+                    window.location.href = 'test.html';
+                }, 2000);
+            } else {
+                showMessage('密钥错误，请重新输入', 'error');
+                shakeInput();
+            }
+        }
+        
+        // 显示消息
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+        }
+        
+        // 输入框抖动动画
+        function shakeInput() {
+            passwordInput.classList.remove('shake');
+            void passwordInput.offsetWidth; // 触发重排
+            passwordInput.classList.add('shake');
+            
+            setTimeout(() => {
+                passwordInput.classList.remove('shake');
+            }, 500);
+        }
+        
+        // 添加抖动动画CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .shake {
+                animation: shake 0.5s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 事件监听
+        enterBtn.addEventListener('click', validatePassword);
+        
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                validatePassword();
+            }
+        });
+        
+        // 限制输入为数字
+        passwordInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    </script>
+</body>
+</html>
